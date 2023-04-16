@@ -18,5 +18,8 @@ const config = {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
   },
+  images: {
+    domains: ['avatars.githubusercontent.com'],
+  },
 };
 export default config;
