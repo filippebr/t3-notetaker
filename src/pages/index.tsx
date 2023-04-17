@@ -48,6 +48,21 @@ const Content: React.FC = () => {
     }
   });
 
+  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
+    {
+      topicId: selectedTopic?.id ?? "",
+    }, 
+    {
+      enabled: sessionData?.user !== undefined && selectedTopic !== null,
+    }
+  )
+
+  const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  })
+
   return (
     <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
       <div className="px-2">
@@ -83,7 +98,15 @@ const Content: React.FC = () => {
       
       </div>
       <div className="col-span-3">
-        <NoteEditor />
+        <NoteEditor 
+          onSave={({ title, content }) => {
+            void createNote.mutate({
+              title, 
+              content,
+              topicId: selectedTopic?.id ?? "",
+            });
+          }}
+        />
       </div>
     </div>
   )

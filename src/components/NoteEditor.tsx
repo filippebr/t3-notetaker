@@ -36,6 +36,22 @@ export const NoteEditor = ({
           onChange={(value) => setCode(value)}
           className="border border-gray-300"
         />
+        <div className="card-actions justify-end">
+          <button
+            onClick={() => {
+              onSave({
+                title,
+                content: code,
+              });
+              setCode("");
+              setTitle("");
+            }}
+            className="btn-primary btn"
+            disabled={title.trim().length === 0 || code.trim().length === 0}
+          >
+            Save
+          </button>
+        </div>
       </div>
     </div>
   )
